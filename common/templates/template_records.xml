@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<!--
+  Please see the license.html file included with this distribution for
+  attribution and copyright information.
+-->
+
+<root>
+
+    <template name="list_spell_type_effects">
+        <windowlist>
+            <child></child>
+            <child>
+                <backcolor>1A40301E</backcolor>
+            </child>
+            <datasource>.addleffects</datasource>
+            <class>spell_type_effects_item</class>
+            <allowdelete />
+            <script file="campaign/scripts/spell_type_effects.lua" />
+        </windowlist>
+    </template>
+
+    <windowclass name="spell_type_effects_item">
+        <margins control="0,0,0,2" />
+        <script>
+			function onInit()
+				getDatabaseNode().onDelete = onDelete;
+			end
+			function onDelete(node)
+				MagicManager.onSpellTypeEffectRemoveEvent(node);
+			end
+            function update(bEditMode)
+                difficulty.setEnabled(bEditMode);
+                name.setReadOnly(not bEditMode);
+                effect.setReadOnly(not bEditMode);
+            end
+        </script>
+        <sheetdata>
+            <genericcontrol name="rightanchor">
+                <anchored position="insidetopright" offset="0,2" height="0" width="0" />
+            </genericcontrol>
+
+            <button_idelete name="idelete">
+                <anchored width="20" height="20">
+                    <top offset="2" />
+                    <right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+                </anchored>
+            </button_idelete>
+
+            <basicnumber name="difficulty">
+                <!-- <disabled /> -->
+                <anchored width="30" height="20">
+                    <top offset="2" />
+                    <right parent="rightanchor" anchor="left" relation="relative" offset="-35" />
+                </anchored>
+                <delaykeyupdate />
+                <tabtarget prev="effect" />
+            </basicnumber>
+            <initdicepool name="difficulty_dice_button">
+                <anchored>
+                    <to>difficulty</to>
+                    <offset>10,10</offset>
+                    <position>right</position>
+                    <size>
+                        <width>18</width>
+                        <height>14</height>
+                    </size>
+                </anchored>
+                <script>
+				function onDoubleClick()
+					local diff = window.getDatabaseNode().getChild("difficulty").getValue();
+					for i=1,diff,1 do
+						DieBoxGenManager.addDie("dDifficulty");
+					end
+				end
+                </script>
+            </initdicepool>
+            <basicstring name="effect">
+                <!-- <disabled /> -->
+                <anchored to="rightanchor">
+                    <top />
+                    <left parent="" offset="115" />
+                    <right anchor="left" relation="relative" offset="-10" />
+                </anchored>
+                <tabtarget next="difficulty" prev="name" />
+                <multilinespacing>20</multilinespacing>
+            </basicstring>
+            <basicstring name="name">
+                <font>sheetlabel</font>
+                <!-- <disabled /> -->
+                <anchored position="insidetopleft" offset="5,5" width="100" height="20">
+                    <!-- <right parent="rightanchor" anchor="left" relation="current" offset="-65" /> -->
+                </anchored>
+                <tabtarget next="effect" />
+            </basicstring>
+        </sheetdata>
+    </windowclass>
+
+</root>

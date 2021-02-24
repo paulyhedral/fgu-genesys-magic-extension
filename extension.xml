@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+	File: extension.xml
+	Author: Paul Schifferer (paulyhedral)
+	Purpose: Define Extension properties
+	Copyright 2021, Paul Schifferer, All Rights Reserved.
+ -->
+<root>
+	<properties>
+		<name>Genesys Magic</name>
+		<version>0.1</version>
+		<loadorder>99</loadorder>
+		<description>
+			<text>Genesys Magic</text>
+			<author>paulyhedral</author>
+		</description>
+	</properties>
+	<announcement text="Magic for Genesys v0.1" font="emotefont" />
+	<base>
+		<!-- Graphics -->
+		<includefile source="graphics/graphics.xml" />
+		<includefile source="graphics/graphics_frames.xml" />
+		<!-- Strings -->
+		<includefile source="strings/strings_magic.xml" />
+		<!-- Records -->
+		<includefile source="campaign/record_custom_spell.xml" />
+		<includefile source="campaign/record_spell_type.xml" />
+		<includefile source="campaign/record_spell_type_effects.xml" />
+		<!-- Templates -->
+		<includefile source="common/templates/template_records.xml" />
+		<!-- Scripts -->
+		<script name="MagicManager" file="scripts/manager_magic.lua" />
+		<script name="DesktopMagic" file="desktop/scripts/data_library.lua" />
+	</base>
+</root>

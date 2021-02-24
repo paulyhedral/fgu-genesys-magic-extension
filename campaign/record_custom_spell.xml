@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root>
+	<windowclass name="srpg_custom_spell">
+		<frame>recordsheet</frame>
+		<placement>
+			<size width="400" height="400" />
+		</placement>
+		<sizelimits>
+			<minimum width="400" height="200" />
+			<dynamic />
+		</sizelimits>
+		<minimize>minimized_item</minimize>
+		<tooltip field="name" />
+		<nodelete />
+		<playercontrol />
+		<sharable />
+		<script file="campaign/scripts/custom_spell.lua" />
+		<sheetdata>
+			<sub_record_header name="header">
+				<class>custom_spell_header</class>
+			</sub_record_header>
+
+			<frame_record_content_tabbed name="contentframe" />
+
+			<subwindow_record name="main">
+				<class>custom_spell_main</class>
+			</subwindow_record>
+			<ft_record name="notes">
+				<anchored to="contentframe" position="over" />
+				<empty textres="ft_empty" hidereadonly="true" />
+				<invisible />
+			</ft_record>
+			<scrollbar_record>
+				<target>notes</target>
+			</scrollbar_record>
+			<tabs_recordsheet name="tabs">
+				<tab>
+					<icon>tab_main</icon>
+					<subwindow>main</subwindow>
+				</tab>
+				<tab>
+					<icon>tab_notes</icon>
+					<subwindow>notes</subwindow>
+				</tab>
+			</tabs_recordsheet>
+
+			<resize_recordsheet />
+			<close_recordsheet />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="custom_spell_header">
+		<margins control="0,0,0,7" />
+		<script>
+			function onInit()
+				update();
+			end
+			function update()
+				local bReadOnly = WindowManager.getReadOnlyState(getDatabaseNode());
+				name.setReadOnly(bReadOnly);
+				if DB.getModule(getDatabaseNode()) then
+					-- if User.isHost() then
+					-- 	copyToDB.setVisible(true);
+					-- end
+					iconLock.setVisible(true);
+					buttonLock.setVisible(false);
+				else
+					-- copyToDB.setVisible(false);
+				end
+			end
+		</script>
+		<sheetdata>
+			<link_record_header>
+				<class>srpg_custom_spell</class>
+			</link_record_header>
+
+			<anchor_record_header_right name="rightanchor" />
+			<icon_record_locked name="iconLock" />
+			<button_record_locked name="buttonLock" />
+
+			<!-- <button_text name="copyToDB">
+				<anchored to="rightanchor" width="120" height="20">
+					<top />
+					<right anchor="left" relation="relative" offset="0" />
+				</anchored>
+				<state textres="customSpellCopyToDB" />
+				<tooltip textres="tooltipCustomSpellCopyToDB" />
+				<script>
+					function onButtonPress()
+						CustomSpellManager.copyToDB(window.getDatabaseNode());
+					end
+				</script>
+				<gmvisibleonly />
+			</button_text> -->
+
+			<string_record_name name="name">
+				<empty textres="library_recordtype_empty_srpg_custom_spell" />
+			</string_record_name>
+		</sheetdata>
+
+	</windowclass>
+
+	<windowclass name="custom_spell_main">
+		<margins control="0,0,0,2" />
+		<script file="campaign/scripts/custom_spell_main.lua" />
+		<sheetdata>
+			<anchor_column name="columnanchor" />
+			<genericcontrol name="rightanchor">
+				<anchored height="0" width="0">
+					<top />
+					<right />
+				</anchored>
+			</genericcontrol>
+
+			<!-- Spell type -->
+			<label_column name="spell_type_label">
+				<static textres="custom_spell_main_label_spell_type" />
+			</label_column>
+			<linkfield name="spell_type_link">
+				<anchored to="rightanchor" position="right" relation="relative" offset="-30,10" width="20">
+					<top />
+				</anchored>
+				<description field="spell_type" />
+				<closetoggle />
+				<invisible />
+				<script>
+						function onInit()
+							onValueChanged();
+						end
+						function onValueChanged()
+							if isEmpty() then
+								setVisible(false);
+							else
+								setVisible(true);
+							end
+						end
+				</script>
+			</linkfield>
+			<string_columnh name="spell_type">
+				<anchored height="20">
+					<right parent="spell_type_link" anchor="left" offset="-10" />
+				</anchored>
+			</string_columnh>
+
+			<!-- <label_frametop name="spell_typeLabel">
+				<anchored position="insidetopleft" offset="5,2">
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<static textres="custom_spell_main_label_spell_type" />
+			</label_frametop>
+			<basicstring name="spell_type">
+				<anchored position="insidetopleft" offset="5,2">
+					<right parent="spell_typeLabel" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+			</basicstring> -->
+			<!-- <string_labeled name="spell_type">
+				<anchored position="insidetopleft" offset="5,2">
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<labelres>main_label_spell_type</labelres>
+			</string_labeled> -->
+
+			<!-- Skills -->
+			<label_column name="skills_label">
+				<static textres="custom_spell_main_label_skills" />
+			</label_column>
+			<string_columnh name="skills" />
+
+			<!-- Difficulty -->
+			<label_column name="difficulty_label">
+				<static textres="custom_spell_main_label_difficulty" />
+			</label_column>
+			<number_columnh name="difficulty">
+				<script>
+				function onValueChanged()
+					local DIFFICULTY_SYMBOL = "&#245;";
+					local value = getValue();
+					local symbols = string.rep(DIFFICULTY_SYMBOL, value);
+					-- DB.setValue(window.getDatabaseNode(), "difficulty_symbols", "string", symbols);
+				end
+				</script>
+			</number_columnh>
+			<initdicepool name="difficulty_dice_button">
+				<anchored>
+					<to>difficulty</to>
+					<offset>15,10</offset>
+					<position>right</position>
+					<size>
+						<width>18</width>
+						<height>14</height>
+					</size>
+				</anchored>
+				<script>
+				function onDoubleClick()
+					local diff = window.parentcontrol.subwindow.difficulty.getValue();
+					for i=1,diff,1 do
+						DieBoxGenManager.addDie("dDifficulty");
+					end
+				end
+				</script>
+			</initdicepool>
+
+			<!-- Qualities -->
+			<label_column name="qualities_label">
+				<static textres="custom_spell_main_label_qualities" />
+			</label_column>
+			<string_columnh name="qualities" />
+
+			<!-- Additional Effects -->
+			<label_column name="effects_label">
+				<static textres="custom_spell_main_label_effects" />
+			</label_column>
+			<string_columnh name="effects" />
+
+			<!-- Description -->
+			<ft_columnh name="description" />
+			<!-- <stringu name="description">
+				<anchored position="insidetopleft" offset="75,2">
+					<right parent="rightanchor" anchor="left" relation="relative" offset="-5" />
+				</anchored>
+				<multilinespacing>20</multilinespacing>
+			</stringu> -->
+
+		</sheetdata>
+	</windowclass>
+</root>

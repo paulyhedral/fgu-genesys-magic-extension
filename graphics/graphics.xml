@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+	File: graphics.xml
+	Author: Paul Schifferer (paulyhedral)
+	Purpose: Define button icons
+	Copyright 2021, Paul Schifferer, All Rights Reserved.
+ -->
+
+<root>
+	<icon name="button_custom_spells_up" file="graphics/sidebar/button_shops_corerpg.png" />
+	<icon name="button_custom_spells_down" file="graphics/sidebar/button_shops_down_corerpg.png" />
+	<icon name="button_spell_types_up" file="graphics/sidebar/button_shops_corerpg.png" />
+	<icon name="button_spell_types_down" file="graphics/sidebar/button_shops_down_corerpg.png" />
+</root>

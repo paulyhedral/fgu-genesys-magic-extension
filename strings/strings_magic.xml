@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+	File: strings_magic.xml
+	Author: Paul Schifferer (paulyhedral)
+	Purpose: Define strings
+	Copyright 2021, Paul Schifferer, All Rights Reserved.
+ -->
+<root>
+	<!-- Record type labels -->
+	<string name="library_recordtype_label_srpg_custom_spell">Custom Spells</string>
+	<string name="library_recordtype_empty_srpg_custom_spell">&#171; New Custom Spell &#187;</string>
+	<string name="library_recordtype_label_srpg_spell_type">Spell Types</string>
+	<string name="library_recordtype_empty_srpg_spell_type">&#171; New Spell Type &#187;</string>
+	<!-- Custom spell record labels -->
+	<string name="custom_spell_main_label_spell_type">Spell Type</string>
+	<string name="custom_spell_main_label_difficulty">Difficulty</string>
+	<string name="custom_spell_main_label_qualities">Qualities</string>
+	<string name="custom_spell_main_label_effects">Add'l Effects</string>
+	<string name="custom_spell_main_label_skills">Skills</string>
+	<!-- Custom spell messages -->
+	<string name="custom_spell_message_spell_type_add">Spell type '%s' added to '%s'.</string>
+	<!-- Spell type record labels -->
+	<string name="spell_type_main_label_skills">Skills</string>
+	<string name="spell_type_main_label_concentration">Concentration?</string>
+	<string name="spell_type_main_tooltip_concentration">Does this spell require a maneuver to maintain?</string>
+	<string name="spell_type_main_label_effect">Effect</string>
+	<string name="spell_type_main_label_stacks">Stacks?</string>
+	<string name="spell_type_main_tooltip_stacks">Does this spell's effects stack?</string>
+	<string name="spell_type_main_label_target">Targets</string>
+	<string name="spell_type_main_label_damage">Damage</string>
+	<string name="spell_type_main_label_critical">Critical</string>
+	<string name="spell_type_main_label_difficulty">Difficulty</string>
+	<string name="spell_type_effects_header_name_label">Name</string>
+	<string name="spell_type_effects_label">Additional Effects</string>
+	<string name="spell_type_effects_header_effect_label">Effect</string>
+	<string name="spell_type_effects_header_difficulty_label">Dif.</string>
+	<!-- <string name="spell_type_effects_header_difficulty_label">&#245;</string> -->
+	<string name="spell_type_effects_header_difficulty_tooltip">Difficulty</string>
+	<!-- Miscellaneous labels -->
+</root>

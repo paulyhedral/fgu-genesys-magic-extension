@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<root>
+	<windowclass name="spell_type_effects">
+		<sheetdata>
+			<button_iedit name="spell_type_effects_iedit">
+				<anchored position="insidebottomright" offset="10,4" />
+				<script>
+					function onInit()
+					  onValueChanged();
+					end
+					function onValueChanged()
+						local bEditMode = (getValue() == 1);
+
+						window.contents.subwindow.effectslist_iadd.setVisible(bEditMode);
+						window.contents.subwindow.effectslist.update(bEditMode);
+					end
+				</script>
+				<target>effectslist</target>
+			</button_iedit>
+
+			<subwindow name="contents">
+				<anchored>
+					<top offset="0" />
+					<bottom offset="-25" />
+					<left offset="0" />
+					<right offset="-15" />
+				</anchored>
+				<class>spell_type_effects_contents</class>
+				<activate />
+				<fastinit />
+			</subwindow>
+			<scrollbar_charcontents />
+		</sheetdata>
+	</windowclass>
+
+	<windowclass name="spell_type_effects_contents">
+		<margins control="0,0,0,2" />
+		<sheetdata>
+			<label_charframetopg name="effects_title">
+				<bounds>15,10,-10,20</bounds>
+				<icons>effects_title</icons>
+				<static textres="spell_type_effects_label" />
+			</label_charframetopg>
+
+			<genericcontrol name="rightanchor">
+				<anchored to="effects_title" position="belowright" offset="-5,5" width="0" />
+				<invisible />
+			</genericcontrol>
+
+			<label name="difficulty_label">
+				<anchored to="rightanchor" width="50">
+					<top />
+					<right anchor="left" relation="relative" offset="-15" />
+				</anchored>
+				<center />
+				<static textres="spell_type_effects_header_difficulty_label" />
+				<tooltip textres="spell_type_effects_header_difficulty_tooltip" />
+			</label>
+			<label name="name_label">
+				<anchored to="effects_title" width="100">
+					<top anchor="bottom" offset="5"/>
+					<left offset="1" />
+					<!-- <right anchor="left" relation="relative" offset="-10" /> -->
+					<!-- <right parent="rightanchor" anchor="left" relation="relative" offset="-5" /> -->
+				</anchored>
+				<static textres="spell_type_effects_header_name_label" />
+				<!-- <center /> -->
+			</label>
+			<label name="effect_label">
+				<anchored to="name_label">
+					<top />
+					<left anchor="right" />
+					<right parent="difficulty_label" anchor="left" offset="-5" />
+				</anchored>
+				<center />
+				<static textres="spell_type_effects_header_effect_label" />
+			</label>
+
+			<button_iadd name="effectslist_iadd">
+				<anchored to="effects_title" position="insidetopright" offset="0,0" />
+				<target>effectslist</target>
+			</button_iadd>
+			<list_spell_type_effects name="effectslist">
+				<anchored to="effects_title">
+					<top anchor="bottom" relation="relative" offset="22" />
+					<right offset="5" />
+					<left offset="0" />
+				</anchored>
+				<noscroll />
+			</list_spell_type_effects>
+		</sheetdata>
+	</windowclass>
+
+</root>
